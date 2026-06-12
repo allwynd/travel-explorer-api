@@ -1,0 +1,102 @@
+{
+  "success": true,
+  "data": {
+    "destination": "Tokyo, Japan",
+    "currency": "JPY",
+    "summary": "A city where vending machines outnumber people and every alley hides a Michelin-starred meal.",
+    "categories": [
+      {
+        "id": "flights",
+        "icon": "✈️",
+        "title": "Flights",
+        "subtitle": "Return flights per person",
+        "color": "#4a8fb5",
+        "totalCost": 2400,
+        "perPerson": 1200,
+        "lineItems": [
+          { "label": "Economy return", "value": "$1,200 pp" },
+          { "label": "Best booking window", "value": "6–8 weeks out" },
+          { "label": "Cheapest airline", "value": "Air New Zealand" }
+        ]
+      },
+      {
+        "id": "accommodation",
+        "icon": "🏨",
+        "title": "Accommodation",
+        "subtitle": "7 nights total",
+        "color": "#2a7a6e",
+        "totalCost": 1260,
+        "perPerson": 630,
+        "lineItems": [
+          { "label": "Per night (total)", "value": "$180" },
+          { "label": "Recommended area", "value": "Shinjuku" },
+          { "label": "Best option", "value": "3-star business hotel" }
+        ]
+      },
+      {
+        "id": "food",
+        "icon": "🍜",
+        "title": "Food & Drink",
+        "subtitle": "Daily meals for all travellers",
+        "color": "#d4a843",
+        "totalCost": 700,
+        "perPerson": 350,
+        "lineItems": [
+          { "label": "Per person per day", "value": "$50" },
+          { "label": "Must-try dish", "value": "Tonkotsu ramen" },
+          { "label": "Best value meal", "value": "Convenience store bento" }
+        ]
+      },
+      {
+        "id": "sightseeing",
+        "icon": "🎯",
+        "title": "Sightseeing & Activities",
+        "subtitle": "Top experiences included",
+        "color": "#c8522a",
+        "totalCost": 400,
+        "perPerson": 200,
+        "lineItems": [
+          { "label": "Top attraction", "value": "teamLab Planets — $30" },
+          { "label": "Hidden gem", "value": "Yanaka old town walk" },
+          { "label": "Free highlights", "value": "Meiji Shrine, Shibuya Crossing" }
+        ]
+      },
+      {
+        "id": "transport",
+        "icon": "🚗",
+        "title": "Local Transport",
+        "subtitle": "Getting around",
+        "color": "#7a5a9e",
+        "totalCost": 220,
+        "perPerson": 110,
+        "lineItems": [
+          { "label": "Airport transfer", "value": "$30 pp Narita Express" },
+          { "label": "Best way around", "value": "IC Card (Suica)" },
+          { "label": "Day pass cost", "value": "$6 unlimited subway" }
+        ]
+      },
+      {
+        "id": "misc",
+        "icon": "📦",
+        "title": "Extras & Contingency",
+        "subtitle": "Shopping, SIM, travel insurance",
+        "color": "#5a9e6e",
+        "totalCost": 280,
+        "perPerson": 140,
+        "lineItems": [
+          { "label": "Travel insurance", "value": "$40 pp" },
+          { "label": "Local SIM card", "value": "$15 (7-day eSIM)" },
+          { "label": "Contingency (10%)", "value": "$85" }
+        ]
+      }
+    ],
+    "tips": [
+      "Get a Suica IC card at the airport — it works on every train, bus, and even convenience stores.",
+      "Visit in late March for cherry blossoms or November for autumn foliage; avoid Golden Week (late April–early May) when prices spike.",
+      "Carry cash — many smaller restaurants and temples are still cash-only despite Tokyo's tech reputation.",
+      "The Tsukiji outer market opens at 5am; arrive early for the freshest sushi breakfast at a fraction of tourist-hour prices."
+    ],
+    "visaInfo": "New Zealand passport holders receive a 90-day visa-free stay under Japan's reciprocal agreement. No application needed — just a valid passport.",
+    "bestTimeToVisit": "Late March to early April (cherry blossoms) or October to November (cool weather, autumn colours, no typhoon risk)"
+  }
+}

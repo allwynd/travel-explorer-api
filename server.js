@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ─── API Routes ───────────────────────────────────────────────────────────────
 app.use('/trips', require('./routes/trips'));
 app.use('/expenses', require('./routes/expenses'));
+app.use('/plan', require('./routes/plan'));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {

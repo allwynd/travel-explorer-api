@@ -87,6 +87,7 @@ travel-explorer/
 ├── routes/
 │   ├── trips.js             # CRUD for trips
 │   └── expenses.js          # CRUD + analytics for expenses
+│ 
 ```
 
 ---
@@ -121,6 +122,7 @@ travel-explorer/
 ## Expense Categories
 
 - 🏨 Accommodation
+- ✈️ Flights
 - 🍜 Food & Drink
 - 🚗 Transport
 - 🛍 Shopping
@@ -141,5 +143,3 @@ USD, EUR, GBP, AUD, NZD, JPY, CAD, SGD, THB, IDR, MYR, PHP, VND, INR, CNY, HKD, 
 
 - **Backend**: Node.js, Express.js
 - **Databases**: MongoDB (Mongoose), PostgreSQL (Sequelize), MySQL (Sequelize)
-- **Frontend**: Vanilla HTML, CSS, JavaScript
-- **Fonts**: Playfair Display, DM Sans, Space Mono

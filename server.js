@@ -22,7 +22,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const path = require('path');
-const { connectDB } = require('./config/database');
+const { connectDB, disconnectDB } = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ─── Static Files ─────────────────────────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
-  
+
 // ─── API Routes ───────────────────────────────────────────────────────────────
 app.use('/trips', require('./routes/trips'));
 app.use('/expenses', require('./routes/expenses'));
@@ -47,12 +47,23 @@ app.use('/plan', require('./routes/plan'));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
+  const mongoose = require('mongoose');
+  const dbType = (process.env.DB_TYPE || '').toLowerCase().trim();
+
+  // readyState: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
+  const mongoState = ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState];
+
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     dbType: process.env.DB_TYPE || 'memory (no DB_TYPE set — data not persisted)',
     environment: process.env.NODE_ENV || 'development',
     envFileLoaded: !dotenvResult.error,
+    ...(dbType === 'mongodb' ? {
+      mongoConnection: mongoState,
+      mongoPoolMax: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 10,
+      mongoPoolMin: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 2,
+    } : {}),
   });
 });
 
@@ -68,9 +79,11 @@ app.use((err, req, res, next) => {
 });
 
 // ─── Start Server ─────────────────────────────────────────────────────────────
+let server;
+
 const startServer = async () => {
   await connectDB();
-  app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.log(`\n🌍 Travel Explorer running at http://localhost:${PORT}`);
     console.log(`📊 DB Type    : ${process.env.DB_TYPE || '⚠️  NOT SET — using in-memory store'}`);
     console.log(`🌱 Environment: ${process.env.NODE_ENV || 'development'}`);
@@ -79,5 +92,39 @@ const startServer = async () => {
 };
 
 startServer();
+
+// ─── Graceful Shutdown ─────────────────────────────────────────────────────────
+// On SIGINT (Ctrl+C) or SIGTERM (e.g. `kill`, container stop, nodemon restart),
+// stop accepting new requests, then close the DB connection pool so no sockets
+// are left open. Without this, MongoDB/Postgres/MySQL pools can linger as
+// orphaned connections after the process exits, especially during frequent
+// nodemon restarts in development.
+let shuttingDown = false;
+
+const gracefulShutdown = async (signal) => {
+  if (shuttingDown) return;
+  shuttingDown = true;
+
+  console.log(`\n👋 Received ${signal} — shutting down gracefully…`);
+
+  // Stop accepting new HTTP connections
+  if (server) {
+    await new Promise((resolve) => server.close(resolve));
+    console.log('🛑 HTTP server closed.');
+  }
+
+  // Release all pooled DB connections
+  try {
+    await disconnectDB();
+  } catch (err) {
+    console.error('Error while closing DB connections:', err.message);
+  }
+
+  console.log('✅ Shutdown complete.\n');
+  process.exit(0);
+};
+
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 module.exports = app;

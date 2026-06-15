@@ -4,13 +4,31 @@ const mongoose = require('mongoose');
 // Supports: MongoDB, PostgreSQL (via Sequelize), MySQL (via Sequelize)
 // Set DB_TYPE in .env to switch between databases.
 //
-// MongoDB safety guarantees:
+// MongoDB efficiency & safety guarantees:
+//   • A single shared connection (with internal pool) is reused across the
+//     whole app — connectMongoDB() is idempotent and safe to call multiple
+//     times (e.g. on serverless cold starts or repeated route initialisation)
+//   • Pool size is bounded (maxPoolSize / minPoolSize) so the app never opens
+//     more sockets to MongoDB than configured
+//   • Idle connections beyond minPoolSize are automatically closed after
+//     maxIdleTimeMS — freeing unused connections without manual intervention
 //   • URI is validated before any connection attempt
 //   • Existing collections are detected — DB is NEVER dropped or recreated
 //   • No sync({ force }) or dropDatabase() calls anywhere in this file
 //   • autoIndex is disabled in production to prevent index rebuilds on startup
+//   • disconnectDB() allows graceful shutdown (SIGINT/SIGTERM) to release
+//     all pooled connections cleanly
 
 let sequelize = null;
+
+// Mongoose connection readyState values:
+//   0 = disconnected | 1 = connected | 2 = connecting | 3 = disconnecting
+const READY_STATE = { DISCONNECTED: 0, CONNECTED: 1, CONNECTING: 2, DISCONNECTING: 3 };
+
+// Tracks an in-flight connection attempt so concurrent callers
+// (e.g. multiple requests during a cold start) await the SAME promise
+// instead of each calling mongoose.connect() separately.
+let connectingPromise = null;
 
 const connectMongoDB = async (uri) => {
   // ── Guard: reject missing or placeholder URIs ──────────────────────────────
@@ -21,13 +39,48 @@ const connectMongoDB = async (uri) => {
     );
   }
 
+  const state = mongoose.connection.readyState;
+
+  // ── Reuse: already connected — do nothing ──────────────────────────────────
+  if (state === READY_STATE.CONNECTED) {
+    console.log('♻️  Reusing existing MongoDB connection (pool already warm).');
+    return mongoose.connection;
+  }
+
+  // ── Reuse: a connection attempt is already in progress — await it ──────────
+  if (state === READY_STATE.CONNECTING && connectingPromise) {
+    console.log('⏳ MongoDB connection already in progress — awaiting it.');
+    return connectingPromise;
+  }
+
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // Disable auto-index in production — indexes should be managed via migrations
+    connectingPromise = mongoose.connect(uri, {
+      // ── Auto-index: disable in production (managed via migrations) ────────
       autoIndex: process.env.NODE_ENV !== 'production',
+
+      // ── Connection pool sizing ─────────────────────────────────────────────
+      // maxPoolSize: hard ceiling on concurrent sockets to MongoDB.
+      // minPoolSize: sockets kept warm even when idle, avoiding reconnect
+      //              latency on the next request.
+      maxPoolSize: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 10,
+      minPoolSize: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 2,
+
+      // ── Free up unused connections ─────────────────────────────────────────
+      // Any pooled connection beyond minPoolSize that sits idle for longer
+      // than maxIdleTimeMS is automatically closed by the driver.
+      maxIdleTimeMS: parseInt(process.env.MONGO_MAX_IDLE_TIME_MS, 10) || 30000,
+
+      // ── Timeouts ────────────────────────────────────────────────────────────
+      // Fail fast if no server is reachable, rather than hanging indefinitely.
+      serverSelectionTimeoutMS: 5000,
+      // Close sockets that have been inactive mid-operation for too long.
+      socketTimeoutMS: 45000,
+
+      // Force IPv4 — avoids slow IPv6 lookup fallbacks on some hosts.
+      family: 4,
     });
+
+    await connectingPromise;
 
     const db = mongoose.connection.db;
     const dbName = db.databaseName;
@@ -48,25 +101,57 @@ const connectMongoDB = async (uri) => {
       console.log(`   🆕 No collections found — new database will be initialised on first write.`);
     }
 
-    // ── Reconnection / error event listeners ────────────────────────────────
-    mongoose.connection.on('disconnected', () =>
-      console.warn('⚠️  MongoDB disconnected — attempting to reconnect…')
-    );
-    mongoose.connection.on('reconnected', () =>
-      console.log('✅ MongoDB reconnected.')
-    );
-    mongoose.connection.on('error', (err) =>
-      console.error('❌ MongoDB runtime error:', err.message)
-    );
+    console.log(`   🔌 Pool size: min=${process.env.MONGO_MIN_POOL_SIZE || 2}, max=${process.env.MONGO_MAX_POOL_SIZE || 10}, idle timeout=${process.env.MONGO_MAX_IDLE_TIME_MS || 30000}ms`);
 
+    // ── Reconnection / error event listeners (registered once) ──────────────
+    if (!mongoose.connection._teListenersAttached) {
+      mongoose.connection.on('disconnected', () =>
+        console.warn('⚠️  MongoDB disconnected — driver will attempt to reconnect…')
+      );
+      mongoose.connection.on('reconnected', () =>
+        console.log('✅ MongoDB reconnected.')
+      );
+      mongoose.connection.on('error', (err) =>
+        console.error('❌ MongoDB runtime error:', err.message)
+      );
+      // Mark as attached so repeated connectMongoDB() calls don't stack listeners
+      mongoose.connection._teListenersAttached = true;
+    }
+
+    return mongoose.connection;
   } catch (err) {
     console.error('❌ MongoDB connection error:', err.message);
     console.error('   Check that MongoDB is running and MONGODB_URI is correct in .env');
     process.exit(1);
+  } finally {
+    connectingPromise = null;
+  }
+};
+
+// ─── Graceful disconnect ──────────────────────────────────────────────────────
+// Closes the connection (and its entire pool) cleanly. Call this on
+// SIGINT/SIGTERM so the process doesn't hold sockets open after exit.
+const disconnectDB = async () => {
+  const dbType = (process.env.DB_TYPE || '').toLowerCase().trim();
+
+  if (dbType === 'mongodb' && mongoose.connection.readyState !== READY_STATE.DISCONNECTED) {
+    await mongoose.connection.close();
+    console.log('🔌 MongoDB connection pool closed.');
+  }
+
+  if (sequelize) {
+    await sequelize.close();
+    console.log('🔌 SQL connection pool closed.');
   }
 };
 
 const connectSQL = async (dialect) => {
+  // ── Reuse: an existing Sequelize instance is already authenticated ────────
+  if (sequelize) {
+    console.log(`♻️  Reusing existing ${dialect.toUpperCase()} connection pool.`);
+    return sequelize;
+  }
+
   try {
     const { Sequelize } = require('sequelize');
     const config = dialect === 'postgres'
@@ -90,16 +175,24 @@ const connectSQL = async (dialect) => {
       port: config.port,
       dialect,
       logging: process.env.NODE_ENV === 'development' ? console.log : false,
-      pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
+      pool: {
+        max: parseInt(process.env.SQL_POOL_MAX, 10) || 10,   // ceiling on connections
+        min: parseInt(process.env.SQL_POOL_MIN, 10) || 0,    // shrink to 0 when idle
+        acquire: 30000,                                       // fail if no conn in 30s
+        idle: parseInt(process.env.SQL_POOL_IDLE_MS, 10) || 10000, // free idle conns after 10s
+      },
     });
 
     await sequelize.authenticate();
     console.log(`✅ ${dialect.toUpperCase()} connected at ${config.host}:${config.port}/${config.database}`);
+    console.log(`   🔌 Pool size: min=${process.env.SQL_POOL_MIN || 0}, max=${process.env.SQL_POOL_MAX || 10}, idle timeout=${process.env.SQL_POOL_IDLE_MS || 10000}ms`);
 
     // alter:true updates columns without dropping tables — safe for existing data.
     // Never use force:true here — it drops and recreates every table.
     await sequelize.sync({ alter: true });
     console.log('✅ SQL tables synced (alter only — existing data preserved)');
+
+    return sequelize;
   } catch (err) {
     console.error(`❌ ${dialect} connection error:`, err.message);
     process.exit(1);
@@ -140,4 +233,4 @@ const connectDB = async () => {
 
 const getSequelize = () => sequelize;
 
-module.exports = { connectDB, getSequelize };
+module.exports = { connectDB, disconnectDB, getSequelize };

@@ -1,0 +1,157 @@
+{
+  "success": true,
+  "data": {
+    "destination": "Tokyo, Japan",
+    "currency": "JPY",
+    "summary": "Discover a mesmerizing metropolis where centuries-old temples stand alongside neon-lit skyscrapers, offering world-class dining, seamless transit, and endless cultural exploration.",
+    "categories": [
+      {
+        "id": "flights",
+        "icon": "✈️",
+        "title": "Flights",
+        "subtitle": "Return economy flights from Auckland to Tokyo",
+        "color": "#4a8fb5",
+        "totalCost": 4800,
+        "perPerson": 1600,
+        "lineItems": [
+          {
+            "label": "Airlines",
+            "value": "Air New Zealand (direct) or Qantas (1 stop)"
+          },
+          {
+            "label": "Baggage",
+            "value": "Includes 23kg checked baggage per person"
+          },
+          {
+            "label": "Booking Tip",
+            "value": "Book 4-6 months ahead for best mid-range fares"
+          }
+        ]
+      },
+      {
+        "id": "accommodation",
+        "icon": "🏨",
+        "title": "Accommodation",
+        "subtitle": "13 nights in mid-range Tokyo hotels",
+        "color": "#2a7a6e",
+        "totalCost": 4500,
+        "perPerson": 1500,
+        "lineItems": [
+          {
+            "label": "Hotel Style",
+            "value": "3-star modern hotels or spacious apartment hotels like Mimaru"
+          },
+          {
+            "label": "Location",
+            "value": "Centrally located near Yamanote Line (e.g., Ueno, Shinjuku, or Asakusa)"
+          },
+          {
+            "label": "Room Type",
+            "value": "Triple room or interconnected twin/single rooms"
+          }
+        ]
+      },
+      {
+        "id": "food",
+        "icon": "🍜",
+        "title": "Food & Drink",
+        "subtitle": "Daily meals, street food, and casual dining",
+        "color": "#d4a843",
+        "totalCost": 2520,
+        "perPerson": 840,
+        "lineItems": [
+          {
+            "label": "Daily Allowance",
+            "value": "Approx. $60 NZD per person daily"
+          },
+          {
+            "label": "Dining Mix",
+            "value": "Ramen joints, conveyor belt sushi, Izakayas, and department store food halls"
+          },
+          {
+            "label": "Konbini Breakfasts",
+            "value": "Affordable quick meals from 7-Eleven, Lawson, or FamilyMart"
+          }
+        ]
+      },
+      {
+        "id": "sightseeing",
+        "icon": "🎯",
+        "title": "Sightseeing & Activities",
+        "subtitle": "Entry tickets, day trips, and experiences",
+        "color": "#c8522a",
+        "totalCost": 1200,
+        "perPerson": 400,
+        "lineItems": [
+          {
+            "label": "Major Attractions",
+            "value": "teamLab Planets, Shibuya Sky, and Tokyo DisneySea tickets"
+          },
+          {
+            "label": "Cultural Sites",
+            "value": "Senso-ji Temple, Meiji Shrine, and Ueno Park (mostly free)"
+          },
+          {
+            "label": "Day Trips",
+            "value": "Guided excursions to Hakone (Mt. Fuji views) or Kamakura"
+          }
+        ]
+      },
+      {
+        "id": "transport",
+        "icon": "🚗",
+        "title": "Local Transport",
+        "subtitle": "Subways, trains, and regional transfers",
+        "color": "#7a5a9e",
+        "totalCost": 900,
+        "perPerson": 300,
+        "lineItems": [
+          {
+            "label": "IC Card",
+            "value": "Preloaded digital Suica or Pasmo card for seamless transit"
+          },
+          {
+            "label": "Subway Passes",
+            "value": "Tokyo Subway 72-hour unlimited passes for heavy travel days"
+          },
+          {
+            "label": "Airport Transfers",
+            "value": "Narita Express (N'EX) or Keisei Skyliner return tickets"
+          }
+        ]
+      },
+      {
+        "id": "misc",
+        "icon": "📦",
+        "title": "Extras & Contingency",
+        "subtitle": "Connectivity, insurance, and shopping budget",
+        "color": "#5a9e6e",
+        "totalCost": 900,
+        "perPerson": 300,
+        "lineItems": [
+          {
+            "label": "Connectivity",
+            "value": "Unlimited Pocket Wi-Fi rental or tourist eSIMs"
+          },
+          {
+            "label": "Insurance",
+            "value": "Comprehensive travel insurance for 3 people"
+          },
+          {
+            "label": "Souvenirs",
+            "value": "Budget for tax-free shopping at Don Quijote and local snacks"
+          }
+        ]
+      }
+    ],
+    "tips": [
+      "Download a digital Suica or Pasmo card to your Apple Wallet before departing New Zealand for seamless transit taps.",
+      "Carry some physical cash (Yen) as smaller ramen shops, temples, and traditional markets often do not accept credit cards.",
+      "Book popular attractions like teamLab Planets, Shibuya Sky, and Tokyo Disney Resort at least 1-2 months in advance.",
+      "Trash cans are rare in public spaces; carry a small plastic bag in your daypack to hold your rubbish until you return to your hotel.",
+      "Download the 'Japan Travel by NAVITIME' app for the most accurate and easy-to-navigate subway routing."
+    ],
+    "visaInfo": "New Zealand passport holders do not require a visa for tourist visits to Japan for stays of up to 90 days. You must have a valid passport and a return ticket.",
+    "bestTimeToVisit": "Late March to April for the iconic cherry blossom season (Sakura), or mid-October to November for stunning autumn foliage and pleasant, mild walking temperatures."
+  }
+}

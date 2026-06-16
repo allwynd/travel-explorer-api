@@ -1,0 +1,161 @@
+{
+    "success": true,
+    "data": {
+        "destination": "India",
+        "currency": "INR",
+        "summary": "An enchanting 14-day journey through India's Golden Triangle and cultural hubs, offering a vibrant tapestry of majestic palaces, bustling bazaars, rich spirituality, and world-renowned culinary delights.",
+        "categories": [
+            {
+                "id": "flights",
+                "icon": "✈️",
+                "title": "Flights",
+                "subtitle": "Return flights from Auckland to New Delhi",
+                "color": "#4a8fb5",
+                "totalCost": 5400,
+                "perPerson": 1800,
+                "lineItems": [
+                    {
+                        "label": "Return Flights",
+                        "value": "AKL to DEL via Singapore or Kuala Lumpur"
+                    },
+                    {
+                        "label": "Baggage & Meals",
+                        "value": "Included in standard mid-range carrier fares"
+                    },
+                    {
+                        "label": "Booking Window",
+                        "value": "Best booked 4-6 months prior to departure"
+                    }
+                ]
+            },
+            {
+                "id": "accommodation",
+                "icon": "🏨",
+                "title": "Accommodation",
+                "subtitle": "Character-filled heritage hotels and 3 to 4-star stays",
+                "color": "#2a7a6e",
+                "totalCost": 2100,
+                "perPerson": 700,
+                "lineItems": [
+                    {
+                        "label": "Heritage Havelis",
+                        "value": "Traditional boutique stays in Rajasthan (~$150/night for 3)"
+                    },
+                    {
+                        "label": "Mid-range Hotels",
+                        "value": "Modern comfort with AC, Wi-Fi, and breakfast included"
+                    },
+                    {
+                        "label": "Triple Room Setup",
+                        "value": "Configured with extra rollaway bed or family suite options"
+                    }
+                ]
+            },
+            {
+                "id": "food",
+                "icon": "🍜",
+                "title": "Food & Drink",
+                "subtitle": "Authentic dining, bottled water, and occasional fine dining",
+                "color": "#d4a843",
+                "totalCost": 1260,
+                "perPerson": 420,
+                "lineItems": [
+                    {
+                        "label": "Daily Meals",
+                        "value": "Approx $30 NZD per person daily for lunch and dinner"
+                    },
+                    {
+                        "label": "Safe Drinking Water",
+                        "value": "Exclusively bottled water and sealed beverages"
+                    },
+                    {
+                        "label": "Specialty Dining",
+                        "value": "Upscale rooftop dinners overlooking palaces"
+                    }
+                ]
+            },
+            {
+                "id": "sightseeing",
+                "icon": "🎯",
+                "title": "Sightseeing & Activities",
+                "subtitle": "Monument entries, guided tours, and unique experiences",
+                "color": "#c8522a",
+                "totalCost": 600,
+                "perPerson": 200,
+                "lineItems": [
+                    {
+                        "label": "Taj Mahal Entry",
+                        "value": "High-value foreigner tickets including golf cart transit"
+                    },
+                    {
+                        "label": "Forts & Palaces",
+                        "value": "Entry passes for Amber Fort, City Palace, and Mehrangarh"
+                    },
+                    {
+                        "label": "Local Experiences",
+                        "value": "Varanasi boat ride, cycle rickshaw tours, and cooking class"
+                    }
+                ]
+            },
+            {
+                "id": "transport",
+                "icon": "🚗",
+                "title": "Local Transport",
+                "subtitle": "Private drivers, express trains, and internal flights",
+                "color": "#7a5a9e",
+                "totalCost": 900,
+                "perPerson": 300,
+                "lineItems": [
+                    {
+                        "label": "Private AC Vehicle",
+                        "value": "Dedicated car and driver for Golden Triangle touring"
+                    },
+                    {
+                        "label": "Express Trains",
+                        "value": "Comfortable AC Chair Car or 2AC Sleeper classes"
+                    },
+                    {
+                        "label": "Ride-Hailing & Autos",
+                        "value": "Uber/Ola apps for safe, metered city transits"
+                    }
+                ]
+            },
+            {
+                "id": "misc",
+                "icon": "📦",
+                "title": "Extras & Contingency",
+                "subtitle": "Visas, travel insurance, SIM cards, and tipping",
+                "color": "#5a9e6e",
+                "totalCost": 900,
+                "perPerson": 300,
+                "lineItems": [
+                    {
+                        "label": "Indian E-Visa",
+                        "value": "Applied online prior to departure (~$40 NZD pp)"
+                    },
+                    {
+                        "label": "Travel Insurance",
+                        "value": "Comprehensive medical and trip cancellation cover"
+                    },
+                    {
+                        "label": "SIM Cards & Connectivity",
+                        "value": "Local tourist SIMs with daily high-speed data"
+                    },
+                    {
+                        "label": "Tipping & Gratuities",
+                        "value": "Allocated for drivers, guides, and hotel staff"
+                    }
+                ]
+            }
+        ],
+        "tips": [
+            "Drink only sealed, bottled water and avoid ice cubes or raw salads to prevent illness.",
+            "Dress modestly in all public places, covering shoulders and knees. Carry a scarf for visiting temples and mosques.",
+            "Download ride-hailing apps like Uber or Ola to secure reliable, pre-priced transport in major cities.",
+            "Carry plenty of cash in small denominations (100 and 500 Rupee notes) as small vendors do not accept cards.",
+            "Always agree on a taxi or auto-rickshaw fare before boarding if they refuse to use a meter."
+        ],
+        "visaInfo": "New Zealand passport holders must apply and pay for an e-Tourist Visa online at least 4 to 7 days before departure. Ensure your passport has at least 6 months validity and two blank pages.",
+        "bestTimeToVisit": "October to March is the ideal time to visit, offering cooler, pleasant winter temperatures perfect for sightseeing across Delhi, Agra, and Rajasthan."
+    }
+}

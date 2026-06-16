@@ -3,7 +3,7 @@
     "data": {
         "destination": "Gold Coast, Australia",
         "currency": "AUD",
-        "summary": "A sun-drenched coastal playground combining world-class surf beaches, thrilling theme parks, and a lush subtropical rainforest hinterland.",
+        "summary": "A sun-drenched coastal playground blending world-class surf beaches, thrilling theme parks, and lush rainforest hinterlands.",
         "categories": [
             {
                 "id": "flights",
@@ -15,12 +15,16 @@
                 "perPerson": 650,
                 "lineItems": [
                     {
-                        "label": "Return Direct Flights",
-                        "value": "Air New Zealand or Jetstar direct to OOL (~$580/person)"
+                        "label": "Airlines",
+                        "value": "Direct return flights with Air New Zealand or Jetstar"
                     },
                     {
-                        "label": "Checked Baggage",
-                        "value": "23kg bag allowance included for all 3 passengers (~$70/person)"
+                        "label": "Baggage",
+                        "value": "Includes 23kg checked baggage allowance per person"
+                    },
+                    {
+                        "label": "Flight Duration",
+                        "value": "Approx. 3.5 hours direct flight time"
                     }
                 ]
             },
@@ -28,18 +32,22 @@
                 "id": "accommodation",
                 "icon": "🏨",
                 "title": "Accommodation",
-                "subtitle": "7 nights in a 2-bedroom apartment in Broadbeach",
+                "subtitle": "6 nights in a mid-range self-contained apartment",
                 "color": "#2a7a6e",
-                "totalCost": 2100,
-                "perPerson": 700,
+                "totalCost": 1500,
+                "perPerson": 500,
                 "lineItems": [
                     {
-                        "label": "Broadbeach Apartment",
-                        "value": "Modern 2-bedroom self-contained apartment near the beach"
+                        "label": "Type & Location",
+                        "value": "2-bedroom family apartment in Broadbeach or Surfers Paradise"
                     },
                     {
-                        "label": "Resort Facilities",
-                        "value": "Access to heated pool, BBQ areas, and secure parking"
+                        "label": "Amenities",
+                        "value": "Full kitchen, laundry facilities, and resort-style pool access"
+                    },
+                    {
+                        "label": "Proximity",
+                        "value": "Within 5 minutes walk to the beach and G:link light rail"
                     }
                 ]
             },
@@ -47,22 +55,22 @@
                 "id": "food",
                 "icon": "🍜",
                 "title": "Food & Drink",
-                "subtitle": "Mix of dining out, surf clubs, and self-catering",
+                "subtitle": "Mix of dining out and light self-catering",
                 "color": "#d4a843",
-                "totalCost": 1680,
-                "perPerson": 560,
+                "totalCost": 1470,
+                "perPerson": 490,
                 "lineItems": [
                     {
-                        "label": "Surf Club Dinners",
-                        "value": "Excellent value meals at Kurrawa or Southport Surf Clubs"
+                        "label": "Breakfast & Snacks",
+                        "value": "Self-catering in apartment with local supermarket groceries"
                     },
                     {
-                        "label": "Cafes & Lunches",
-                        "value": "Acai bowls, flat whites, and beachside lunch spots"
+                        "label": "Lunch & Dinners",
+                        "value": "Casual beachside dining, surf clubs, and local night markets"
                     },
                     {
-                        "label": "Groceries & Self-Catering",
-                        "value": "Breakfast supplies and snacks from Woolworths/Coles"
+                        "label": "Must-Try",
+                        "value": "Fresh local seafood at a Surf Lifesaving Club"
                     }
                 ]
             },
@@ -70,22 +78,22 @@
                 "id": "sightseeing",
                 "icon": "🎯",
                 "title": "Sightseeing & Activities",
-                "subtitle": "Theme parks, wildlife, and natural attractions",
+                "subtitle": "Theme parks, sky decks, and nature tours",
                 "color": "#c8522a",
                 "totalCost": 1050,
                 "perPerson": 350,
                 "lineItems": [
                     {
-                        "label": "Theme Park Mega Pass",
-                        "value": "14-day entry to Warner Bros. Movie World, Sea World, and Wet'n'Wild"
+                        "label": "Theme Parks",
+                        "value": "3-day Village Roadshow pass (Movie World, Sea World, Wet'n'Wild)"
                     },
                     {
-                        "label": "Currumbin Wildlife Sanctuary",
-                        "value": "Entry ticket to feed kangaroos and see koalas up close"
+                        "label": "Views",
+                        "value": "SkyPoint Observation Deck entry for 360-degree coastal views"
                     },
                     {
-                        "label": "Springbrook Glow Worms",
-                        "value": "Evening guided tour to natural bridge waterfall and glow caves"
+                        "label": "Hinterland",
+                        "value": "Day trip to Springbrook National Park to see Natural Bridge"
                     }
                 ]
             },
@@ -93,22 +101,22 @@
                 "id": "transport",
                 "icon": "🚗",
                 "title": "Local Transport",
-                "subtitle": "Car rental and public transport options",
+                "subtitle": "Public transport passes and airport transfers",
                 "color": "#7a5a9e",
-                "totalCost": 810,
-                "perPerson": 270,
+                "totalCost": 240,
+                "perPerson": 80,
                 "lineItems": [
                     {
-                        "label": "8-Day Car Rental",
-                        "value": "Mid-size SUV picked up and dropped off at OOL Airport"
+                        "label": "Public Transit",
+                        "value": "Go Card for seamless G:link light rail and bus travel"
                     },
                     {
-                        "label": "Fuel & Parking",
-                        "value": "Estimated fuel costs and theme park/beach parking fees"
+                        "label": "Airport Transfer",
+                        "value": "Rideshare (Uber/DiDi) from Gold Coast Airport to accommodation"
                     },
                     {
-                        "label": "G:link Light Rail",
-                        "value": "Go Card fares for stress-free travel between Surfers and Broadbeach"
+                        "label": "Convenience",
+                        "value": "Direct public bus routes connecting theme parks and major hubs"
                     }
                 ]
             },
@@ -116,34 +124,34 @@
                 "id": "misc",
                 "icon": "📦",
                 "title": "Extras & Contingency",
-                "subtitle": "Insurance, SIM cards, and emergency funds",
+                "subtitle": "Insurance, roaming, and emergency buffer",
                 "color": "#5a9e6e",
-                "totalCost": 600,
-                "perPerson": 200,
+                "totalCost": 300,
+                "perPerson": 100,
                 "lineItems": [
                     {
                         "label": "Travel Insurance",
-                        "value": "Comprehensive cover for 3 NZ travelers (~$180 total)"
+                        "value": "Comprehensive cover for 3 travellers"
                     },
                     {
-                        "label": "Local eSIMs",
-                        "value": "5G data plans for navigation and sharing memories (~$20/person)"
+                        "label": "Connectivity",
+                        "value": "Local eSIM data packs or mobile roaming plans"
                     },
                     {
-                        "label": "Contingency Fund",
-                        "value": "Reserved cash for unexpected shopping, medical, or activity costs"
+                        "label": "Emergency Fund",
+                        "value": "Cash reserves for unexpected expenses or extra souvenirs"
                     }
                 ]
             }
         ],
         "tips": [
-            "Book your Theme Park passes online in advance to skip the main queues and secure multi-day discounts.",
-            "Consider staying in Broadbeach rather than Surfers Paradise for a slightly more relaxed, family-friendly, and dining-focused atmosphere.",
-            "Get a 'Go Card' for cheap and easy public transport on the G:link light rail system.",
-            "Always swim between the red and yellow flags, as Gold Coast beaches are known for strong rips and currents.",
-            "Drive out to the hinterland (Mt Tamborine or Springbrook) for a day to experience stunning rainforest walks and cooler temperatures."
+            "Buy your theme park tickets online in advance to secure combo deals and bypass long ticket booth queues.",
+            "Get a Go Card at the airport or tram stations for the cheapest and easiest public transport rates.",
+            "Dine at local Surf Lifesaving Clubs (SLSCs) for high-quality, reasonably priced meals directly overlooking the ocean.",
+            "Pack high-SPF sunscreen and swim shirts; the Queensland sun is exceptionally strong and will burn quickly.",
+            "Consider booking a 2-bedroom apartment with kitchen facilities; cooking even a few meals will dramatically lower your overall budget."
         ],
-        "visaInfo": "New Zealand citizens traveling on a valid NZ passport are generally granted a Special Category Visa (subclass 444) automatically upon arrival in Australia, provided they meet basic character and health requirements.",
-        "bestTimeToVisit": "May to October is ideal. These months offer comfortable, warm daily temperatures (20-25°C), lower humidity, and the least rainfall, making it perfect for both theme parks and beach activities."
+        "visaInfo": "New Zealand citizens holding a valid NZ passport are generally granted a Special Category Visa (Subclass 444) automatically on arrival in Australia, subject to meeting standard health and character requirements.",
+        "bestTimeToVisit": "May to October is the ideal time to visit, featuring comfortable, warm daytime temperatures, minimal rainfall, and lower humidity levels perfect for theme parks and outdoor activities."
     }
 }

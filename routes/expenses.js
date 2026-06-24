@@ -7,6 +7,27 @@ const getStore = () => {
   return require('../models/inMemoryStore');
 };
 
+// validate request headers: X-User-Id, X-User-Email, X-User-Name for all routes in this router when process.env.NODE_ENV === 'production'. 
+// If these headers are missing, return 401 Unauthorized with a message "Missing user identity. Direct Access is not permitted."
+router.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod') {
+
+    // Check incoming request header: x-apim-gateway-secret matches the environment variable APIM_GATEWAY_SECRET
+    if (req.header('x-apim-gateway-secret') !== process.env.APIM_GATEWAY_SECRET) {
+      return res.status(401).json({ success: false, message: 'Unauthorised: invalid or missing gateway secret.' });
+    }
+
+    const userId = req.header('X-User-Id');
+    const userEmail = req.header('X-User-Email');
+    const userName = req.header('X-User-Name');
+
+    if (!userId || !userEmail || !userName) {
+      return res.status(401).json({ success: false, message: 'Missing user identity. Direct Access is not permitted.' });
+    }
+  }
+  next();
+});
+
 // ── GET /expenses?tripId=xxx ──────────────────────────────────────────────
 router.get('/', async (req, res) => {
   try {

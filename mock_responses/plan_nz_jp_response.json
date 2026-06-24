@@ -1,30 +1,30 @@
 {
     "success": true,
     "data": {
-        "destination": "Japan",
-        "currency": "JPY",
-        "summary": "A mesmerizing blend of ultra-modern technology, neon-lit skyscrapers, and ancient, tranquil shrines, Japan offers an unforgettable journey through bustling cities and scenic landscapes.",
+        "destination": "Tokyo and Kyoto, Japan",
+        "currency": "NZD",
+        "summary": "Experience the vibrant contrast of Tokyo's neon skyline and Kyoto's serene temples, perfect for summer exploration and scenic mountain hiking.",
         "categories": [
             {
                 "id": "flights",
                 "icon": "✈️",
                 "title": "Flights",
-                "subtitle": "Return economy flights from Auckland to Tokyo",
+                "subtitle": "International return flights from Auckland to Tokyo",
                 "color": "#4a8fb5",
-                "totalCost": 5400,
-                "perPerson": 1800,
+                "totalCost": 4800,
+                "perPerson": 1600,
                 "lineItems": [
                     {
-                        "label": "Air New Zealand Direct / Qantas",
-                        "value": "~$1,800 per person return"
+                        "label": "Average return fare",
+                        "value": "$1,600 per person"
                     },
                     {
-                        "label": "Indirect flight options",
-                        "value": "Via Sydney/Fiji can save $150-$300 pp"
+                        "label": "Peak Season",
+                        "value": "August is high season for summer festivals"
                     },
                     {
-                        "label": "Booking window",
-                        "value": "Best booked 4-6 months in advance"
+                        "label": "Airline choice",
+                        "value": "Direct flights via Air NZ or ANA"
                     }
                 ]
             },
@@ -32,22 +32,22 @@
                 "id": "accommodation",
                 "icon": "🏨",
                 "title": "Accommodation",
-                "subtitle": "Mid-range business hotels and a traditional Ryokan stay",
+                "subtitle": "Mid-range hotels and traditional ryokans for 14 nights",
                 "color": "#2a7a6e",
-                "totalCost": 3900,
-                "perPerson": 1300,
+                "totalCost": 4200,
+                "perPerson": 1400,
                 "lineItems": [
                     {
-                        "label": "3-Star Hotels (Tokyo/Kyoto)",
-                        "value": "12 nights, avg $250/night for triple room"
+                        "label": "Nightly average",
+                        "value": "$300 total for 3 people"
                     },
                     {
-                        "label": "Traditional Ryokan",
-                        "value": "1 night in Hakone with Kaiseki dinner, $900 total"
+                        "label": "Kyoto stay",
+                        "value": "Select guesthouses near Gion district"
                     },
                     {
-                        "label": "Key Locations",
-                        "value": "Shinjuku (Tokyo) and Shimogyo-ku (Kyoto)"
+                        "label": "Tokyo stay",
+                        "value": "Shinjuku or Shibuya for convenience"
                     }
                 ]
             },
@@ -55,22 +55,22 @@
                 "id": "food",
                 "icon": "🍜",
                 "title": "Food & Drink",
-                "subtitle": "Daily dining experiences from street food to casual restaurants",
+                "subtitle": "Daily budget for diverse vegetarian dining options",
                 "color": "#d4a843",
-                "totalCost": 2520,
-                "perPerson": 840,
+                "totalCost": 2100,
+                "perPerson": 700,
                 "lineItems": [
                     {
-                        "label": "Daily Food Budget",
-                        "value": "$60 per person per day"
+                        "label": "Daily allowance",
+                        "value": "$50 per person"
                     },
                     {
-                        "label": "Convenience Store Breakfasts",
-                        "value": "$8-$12 per person (7-Eleven/Lawson)"
+                        "label": "Vegetarian tip",
+                        "value": "Use 'HappyCow' app for shojin-ryori (monk food)"
                     },
                     {
-                        "label": "Casual Lunches & Dinners",
-                        "value": "Ramen & Izakayas, avg $20-$40 per meal"
+                        "label": "Convenience stores",
+                        "value": "Onigiri and bento boxes are reliable options"
                     }
                 ]
             },
@@ -78,22 +78,22 @@
                 "id": "sightseeing",
                 "icon": "🎯",
                 "title": "Sightseeing & Activities",
-                "subtitle": "Pre-booked attractions, temples, and experiences",
+                "subtitle": "Hiking tours, temple fees, and festival experiences",
                 "color": "#c8522a",
-                "totalCost": 750,
-                "perPerson": 250,
+                "totalCost": 1200,
+                "perPerson": 400,
                 "lineItems": [
                     {
-                        "label": "teamLab Planets Tokyo",
-                        "value": "Digital art museum, ~$45 per person"
+                        "label": "Hiking focus",
+                        "value": "Mt. Takao near Tokyo and Fushimi Inari in Kyoto"
                     },
                     {
-                        "label": "Universal Studios Japan / Disney",
-                        "value": "1-Day Studio Pass, ~$95 per person"
+                        "label": "Temple entry",
+                        "value": "Most temples charge $5-$10 entry"
                     },
                     {
-                        "label": "Temples & Historic Sites",
-                        "value": "Many free; minor entry fees around $5-$10"
+                        "label": "Guided tours",
+                        "value": "Include 1-2 professional trekking guides"
                     }
                 ]
             },
@@ -101,22 +101,22 @@
                 "id": "transport",
                 "icon": "🚗",
                 "title": "Local Transport",
-                "subtitle": "Bullet trains, metro passes, and local transport cards",
+                "subtitle": "Trains, subways, and the Shinkansen bullet train",
                 "color": "#7a5a9e",
-                "totalCost": 1200,
-                "perPerson": 400,
+                "totalCost": 1500,
+                "perPerson": 500,
                 "lineItems": [
                     {
-                        "label": "Shinkansen (Bullet Train)",
-                        "value": "Tokyo to Kyoto round trip, ~$220 per person"
+                        "label": "Regional travel",
+                        "value": "JR Pass or individual Shinkansen tickets"
                     },
                     {
-                        "label": "IC Cards (Suica/Pasmo)",
-                        "value": "Subways and buses, ~$120 loaded per person"
+                        "label": "City transport",
+                        "value": "Suica or Pasmo cards for local subways"
                     },
                     {
-                        "label": "Luggage Forwarding",
-                        "value": "Takkyubin service, ~$30 per bag between cities"
+                        "label": "Connectivity",
+                        "value": "Reliable high-speed rail between Tokyo and Kyoto"
                     }
                 ]
             },
@@ -124,34 +124,34 @@
                 "id": "misc",
                 "icon": "📦",
                 "title": "Extras & Contingency",
-                "subtitle": "Connectivity, insurance, and spending money",
+                "subtitle": "Travel insurance, pocket Wi-Fi, and unexpected costs",
                 "color": "#5a9e6e",
-                "totalCost": 600,
-                "perPerson": 200,
+                "totalCost": 900,
+                "perPerson": 300,
                 "lineItems": [
                     {
-                        "label": "Unlimited eSIM / Pocket WiFi",
-                        "value": "$120 total for the trip"
+                        "label": "Pocket Wi-Fi",
+                        "value": "Essential for navigation ($150 total)"
                     },
                     {
                         "label": "Travel Insurance",
-                        "value": "Comprehensive cover, ~$300 total for 3 travellers"
+                        "value": "Highly recommended for active travellers"
                     },
                     {
-                        "label": "Gachapon & Souvenirs",
-                        "value": "$180 allocated for small items"
+                        "label": "Emergency fund",
+                        "value": "Reserve budget for shopping or transit issues"
                     }
                 ]
             }
         ],
         "tips": [
-            "Purchase an eSIM or pocket Wi-Fi at the airport for seamless navigation using Google Maps.",
-            "Always carry cash (Yen) as many traditional restaurants, temple ticket booths, and local vendors do not accept international credit cards.",
-            "Use luggage forwarding services (Takkyubin) to send large suitcases between Tokyo and Kyoto so you do not struggle on crowded trains.",
-            "Download the 'Japan Travel by NAVITIME' app for accurate subway, local train, and Shinkansen route planning.",
-            "Observe local etiquette: do not eat while walking, keep your phone on silent on public transit, and do not tip at restaurants."
+            "August is extremely hot and humid; prioritize morning hikes to avoid the midday heat.",
+            "Many traditional restaurants in Kyoto offer excellent vegetarian shojin-ryori set meals.",
+            "Stay hydrated and use 'Konbini' (convenience stores) for cheap, quick vegetarian snacks.",
+            "Learn basic Japanese phrases; while Tokyo is English-friendly, rural hiking trails may not be.",
+            "Book your Shinkansen tickets in advance if travelling during the Obon festival period."
         ],
-        "visaInfo": "New Zealand citizens traveling to Japan for tourism do not require a visa for stays of up to 90 days, provided they hold a valid passport and a return ticket.",
-        "bestTimeToVisit": "Spring (March to May) for the iconic cherry blossoms, or Autumn (September to November) for pleasant, mild temperatures and stunning autumn foliage."
+        "visaInfo": "New Zealand citizens can visit Japan for up to 90 days for tourism purposes without a visa under the visa waiver agreement.",
+        "bestTimeToVisit": "Spring (late March-April) for cherry blossoms or Autumn (November) for fall foliage; however, August is fantastic for vibrant summer festivals like Gion Matsuri."
     }
 }

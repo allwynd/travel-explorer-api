@@ -51,12 +51,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
-app.use('/trips', require('./routes/trips'));
-app.use('/expenses', require('./routes/expenses'));
-app.use('/plan', require('./routes/plan'));
+app.use('/api/trips', require('./routes/trips'));
+app.use('/api/expenses', require('./routes/expenses'));
+app.use('/agent/plan', require('./routes/plan'));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   const mongoose = require('mongoose');
   const dbType = (process.env.DB_TYPE || '').toLowerCase().trim();
 
@@ -78,7 +78,7 @@ app.get('/health', (req, res) => {
 });
 
 // ─── Serve Frontend SPA ───────────────────────────────────────────────────────
-app.get('*', (req, res) => {
+app.get('/api/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

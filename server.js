@@ -51,12 +51,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
-app.use('/api/trips', require('./routes/trips'));
-app.use('/api/expenses', require('./routes/expenses'));
-app.use('/agent/plan', require('./routes/plan'));
+app.use('/trips', require('./routes/trips'));
+app.use('/expenses', require('./routes/expenses'));
+app.use('/plan', require('./routes/plan'));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   const mongoose = require('mongoose');
   const dbType = (process.env.DB_TYPE || '').toLowerCase().trim();
 

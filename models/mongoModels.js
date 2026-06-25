@@ -7,6 +7,14 @@ const mongoose = require('mongoose');
 // redefining it, which would otherwise clear in-memory model state.
 
 const tripSchema = new mongoose.Schema({
+  // Owner of this trip — matches UserProfile.user_id (auth-provider UID).
+  // Indexed so queries scoped to a single user (the common case) stay fast.
+  user_id: {
+    type: String,
+    required: true,
+    trim: true,
+    index: true,
+  },
   name:        { type: String, required: true, trim: true },
   destination: { type: String, required: true, trim: true },
   startDate:   { type: Date },
@@ -21,6 +29,9 @@ const tripSchema = new mongoose.Schema({
 }, {
   timestamps: true,
   toJSON: { virtuals: true },
+  // Disable autoIndex at schema level — inherits the global setting from
+  // database.js but this makes it explicit and prevents accidental index
+  // creation if the schema is used outside the normal boot path.
   autoIndex: process.env.NODE_ENV !== 'production',
 });
 
@@ -31,6 +42,10 @@ const EXPENSE_CATEGORIES = [
 ];
 
 const expenseSchema = new mongoose.Schema({
+  // Owner of this expense — denormalised from the parent trip so that
+  // per-user expense queries don't require a join through Trip.
+  // Always set to the same user_id as the parent trip on creation.
+  user_id:       { type: String, required: true, trim: true, index: true },
   tripId:        { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
   category:      { type: String, required: true, enum: EXPENSE_CATEGORIES },
   description:   { type: String, default: '', trim: true },
@@ -43,6 +58,10 @@ const expenseSchema = new mongoose.Schema({
   toJSON: { virtuals: true },
   autoIndex: process.env.NODE_ENV !== 'production',
 });
+
+// Compound index: the most common query is "expenses for a specific trip
+// belonging to a specific user", so index both fields together.
+expenseSchema.index({ user_id: 1, tripId: 1 });
 
 // ─── UserProfile Schema ───────────────────────────────────────────────────────
 // user_id is a unique alphanumeric string (e.g. Firebase UID or similar).
@@ -67,7 +86,7 @@ const userProfileSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,    // sparse handled by the unique index below
+    unique: true,
     trim: true,
     lowercase: true,
     match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please provide a valid email address'],

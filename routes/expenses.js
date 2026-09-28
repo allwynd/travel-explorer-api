@@ -7,6 +7,41 @@ const getStore = () => {
   return require('../models/inMemoryStore');
 };
 
+const serializeId = (value) => {
+  if (!value || typeof value !== 'object') return value;
+  if (typeof value.toHexString === 'function') return value.toHexString();
+  if (value instanceof Date) return value.toISOString();
+  if (typeof value.toJSON === 'function') return value.toJSON();
+  return value;
+};
+
+const stripUserId = (value) => {
+  if (Array.isArray(value)) {
+    return value.map(stripUserId);
+  }
+
+  if (value && typeof value === 'object') {
+    if (typeof value.toObject === 'function') {
+      value = value.toObject({ virtuals: true });
+    }
+  }
+
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
+
+  const sanitized = {};
+  for (const [key, nestedValue] of Object.entries(value)) {
+    if (key === 'user_id') continue;
+    if (key === '_id' || key === 'tripId') {
+      sanitized[key] = serializeId(nestedValue);
+      continue;
+    }
+    sanitized[key] = stripUserId(nestedValue);
+  }
+  return sanitized;
+};
+
 // ─── Auth / identity middleware ───────────────────────────────────────────────
 // In production:
 //   1. Validates the APIM gateway secret to ensure requests came through the
@@ -62,7 +97,7 @@ router.get('/', async (req, res) => {
     } else {
       expenses = store.getExpenses(tripId, user_id);
     }
-    res.json({ success: true, data: expenses });
+    res.json({ success: true, data: stripUserId(expenses) });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -129,7 +164,7 @@ router.get('/summary/:tripId', async (req, res) => {
     res.json({
       success: true,
       data: {
-        trip,
+        trip: stripUserId(trip),
         totalSpent:    Math.round(total * 100) / 100,
         budget,
         remaining:     Math.round(remaining * 100) / 100,
@@ -137,7 +172,7 @@ router.get('/summary/:tripId', async (req, res) => {
         expenseCount:  expenses.length,
         categoryBreakdown,
         dailyBreakdown,
-        highestExpense,
+        highestExpense: stripUserId(highestExpense),
         currency:      trip.currency || 'USD',
       },
     });
@@ -181,10 +216,10 @@ router.post('/', async (req, res) => {
         paymentMethod,
         notes,
       });
-      return res.status(201).json({ success: true, data: expense, message: 'Expense added successfully.' });
+      return res.status(201).json({ success: true, data: stripUserId(expense), message: 'Expense added successfully.' });
     } else {
       const expense = store.createExpense({ user_id, tripId, category, description, amount, date, paymentMethod, notes });
-      return res.status(201).json({ success: true, data: expense, message: 'Expense added successfully.' });
+      return res.status(201).json({ success: true, data: stripUserId(expense), message: 'Expense added successfully.' });
     }
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -215,7 +250,7 @@ router.put('/:id', async (req, res) => {
       expense = store.updateExpense(req.params.id, updates, user_id);
     }
     if (!expense) return res.status(404).json({ success: false, message: 'Expense not found.' });
-    res.json({ success: true, data: expense, message: 'Expense updated.' });
+    res.json({ success: true, data: stripUserId(expense), message: 'Expense updated.' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

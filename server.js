@@ -54,7 +54,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/trips',    require('./routes/trips'));
 app.use('/expenses', require('./routes/expenses'));
 app.use('/plan',     require('./routes/plan'));
-app.use('/users',    require('./routes/users'));   // UserProfile CRUD
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {

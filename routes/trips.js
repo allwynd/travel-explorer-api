@@ -7,6 +7,41 @@ const getStore = () => {
   return require('../models/inMemoryStore');
 };
 
+const serializeId = (value) => {
+  if (!value || typeof value !== 'object') return value;
+  if (typeof value.toHexString === 'function') return value.toHexString();
+  if (value instanceof Date) return value.toISOString();
+  if (typeof value.toJSON === 'function') return value.toJSON();
+  return value;
+};
+
+const stripUserId = (value) => {
+  if (Array.isArray(value)) {
+    return value.map(stripUserId);
+  }
+
+  if (value && typeof value === 'object') {
+    if (typeof value.toObject === 'function') {
+      value = value.toObject({ virtuals: true });
+    }
+  }
+
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
+
+  const sanitized = {};
+  for (const [key, nestedValue] of Object.entries(value)) {
+    if (key === 'user_id') continue;
+    if (key === '_id' || key === 'tripId') {
+      sanitized[key] = serializeId(nestedValue);
+      continue;
+    }
+    sanitized[key] = stripUserId(nestedValue);
+  }
+  return sanitized;
+};
+
 // ─── Auth / identity middleware ───────────────────────────────────────────────
 // In production:
 //   1. Validates the APIM gateway secret to ensure requests came through the
@@ -58,7 +93,7 @@ router.get('/', async (req, res) => {
     } else {
       trips = store.getTrips(user_id);
     }
-    res.json({ success: true, data: trips });
+    res.json({ success: true, data: stripUserId(trips) });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -81,7 +116,7 @@ router.get('/:id', async (req, res) => {
       trip = store.getTripById(req.params.id, user_id);
     }
     if (!trip) return res.status(404).json({ success: false, message: 'Trip not found.' });
-    res.json({ success: true, data: trip });
+    res.json({ success: true, data: stripUserId(trip) });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -106,7 +141,7 @@ router.post('/', async (req, res) => {
     } else {
       trip = store.createTrip({ user_id, name, destination, startDate, endDate, currency, budget, notes });
     }
-    res.status(201).json({ success: true, data: trip, message: 'Trip created successfully.' });
+    res.status(201).json({ success: true, data: stripUserId(trip), message: 'Trip created successfully.' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -136,7 +171,7 @@ router.put('/:id', async (req, res) => {
       trip = store.updateTrip(req.params.id, updates, user_id);
     }
     if (!trip) return res.status(404).json({ success: false, message: 'Trip not found.' });
-    res.json({ success: true, data: trip, message: 'Trip updated successfully.' });
+    res.json({ success: true, data: stripUserId(trip), message: 'Trip updated successfully.' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

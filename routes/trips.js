@@ -20,6 +20,10 @@ const stripUserId = (value) => {
     return value.map(stripUserId);
   }
 
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+
   if (value && typeof value === 'object') {
     if (typeof value.toObject === 'function') {
       value = value.toObject({ virtuals: true });
@@ -46,7 +50,7 @@ const stripUserId = (value) => {
 // In production:
 //   1. Validates the APIM gateway secret to ensure requests came through the
 //      API Management layer and were not sent directly to the backend.
-//   2. Enforces the presence of X-User-Id / X-User-Email / X-User-Name headers
+//   2. Enforces the presence of X-User-Id headers
 //      injected by the auth layer upstream.
 // In development these checks are skipped so the app runs without a gateway,
 // but X-User-Id is still read (if present) to allow per-user testing locally.
@@ -58,11 +62,8 @@ router.use((req, res, next) => {
     }
 
     const userId    = req.header('X-User-Id');
-    const userEmail = req.header('X-User-Email');
-    const userName  = req.header('X-User-Name');
-
-    if (!userId || !userEmail || !userName) {
-      return res.status(401).json({ success: false, message: 'Missing user identity. Direct Access is not permitted.' });
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Missing user headers. Direct Access is not permitted.' });
     }
   }
   next();

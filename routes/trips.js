@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const dbType = (process.env.DB_TYPE || 'memory').toLowerCase();
+const TRIP_STATUSES = ['planned', 'on-hold', 'cancelled', 'completed'];
 
 const getStore = () => {
   if (dbType === 'mongodb') return require('../models/mongoModels');
@@ -129,18 +130,24 @@ router.post('/', async (req, res) => {
   const user_id = resolveUserId(req);
   if (!user_id) return res.status(400).json({ success: false, message: 'user_id is required.' });
 
-  const { name, destination, startDate, endDate, currency, budget, notes } = req.body;
+  const { name, destination, startDate, endDate, status, currency, budget, notes } = req.body;
   if (!name || !destination) {
     return res.status(400).json({ success: false, message: 'Name and destination are required.' });
+  }
+  if (status !== undefined && !TRIP_STATUSES.includes(status)) {
+    return res.status(400).json({
+      success: false,
+      message: `status must be one of: ${TRIP_STATUSES.join(', ')}.`,
+    });
   }
 
   try {
     const store = getStore();
     let trip;
     if (dbType === 'mongodb') {
-      trip = await store.Trip.create({ user_id, name, destination, startDate, endDate, currency, budget, notes });
+      trip = await store.Trip.create({ user_id, name, destination, startDate, endDate, status, currency, budget, notes });
     } else {
-      trip = store.createTrip({ user_id, name, destination, startDate, endDate, currency, budget, notes });
+      trip = store.createTrip({ user_id, name, destination, startDate, endDate, status, currency, budget, notes });
     }
     res.status(201).json({ success: true, data: stripUserId(trip), message: 'Trip created successfully.' });
   } catch (err) {
@@ -158,6 +165,12 @@ router.put('/:id', async (req, res) => {
 
   // Strip user_id from the update body — it must not be reassignable.
   const { user_id: _stripped, ...updates } = req.body;
+  if (updates.status !== undefined && !TRIP_STATUSES.includes(updates.status)) {
+    return res.status(400).json({
+      success: false,
+      message: `status must be one of: ${TRIP_STATUSES.join(', ')}.`,
+    });
+  }
 
   try {
     const store = getStore();

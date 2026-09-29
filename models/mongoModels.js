@@ -19,6 +19,7 @@ const tripSchema = new mongoose.Schema({
   destination: { type: String, required: true, trim: true },
   startDate:   { type: Date },
   endDate:     { type: Date },
+  status:      { type: String, enum: ['planned', 'on-hold', 'cancelled', 'completed'], default: 'planned' },
   currency: {
     type: String,
     default: 'USD',

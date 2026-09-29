@@ -22,6 +22,7 @@ const createTrip = (data) => {
     destination: data.destination,
     startDate: data.startDate,
     endDate: data.endDate,
+    status: data.status || 'planned',
     currency: data.currency || 'USD',
     budget: parseFloat(data.budget) || 0,
     notes: data.notes || '',

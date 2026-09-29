@@ -152,9 +152,34 @@ router.get('/summary/:tripId', async (req, res) => {
     // Daily breakdown
     const dailyBreakdown = {};
     expenses.forEach(e => {
-      const day = (e.date || '').toString().split('T')[0];
+      const rawDate = e.date ? new Date(e.date) : null;
+      const day = rawDate && !Number.isNaN(rawDate.getTime())
+        ? rawDate.toISOString().split('T')[0]
+        : null;
+
+      if (!day) return;
       if (!dailyBreakdown[day]) dailyBreakdown[day] = 0;
       dailyBreakdown[day] += e.amount;
+    });
+
+    const fixedCostCategories = new Set(['flights', 'visa', 'accommodation', 'accomodation']);
+    const costTypeBreakdown = {
+      fixed: { total: 0, categories: {} },
+      variable: { total: 0, categories: {} },
+    };
+
+    expenses.forEach(e => {
+      const bucketName = fixedCostCategories.has(e.category) ? 'fixed' : 'variable';
+      const bucket = costTypeBreakdown[bucketName];
+      const categoryKey = e.category || 'other';
+
+      if (!bucket.categories[categoryKey]) {
+        bucket.categories[categoryKey] = { total: 0, count: 0 };
+      }
+
+      bucket.categories[categoryKey].total += e.amount;
+      bucket.categories[categoryKey].count += 1;
+      bucket.total += e.amount;
     });
 
     // Highest expense
@@ -173,6 +198,7 @@ router.get('/summary/:tripId', async (req, res) => {
         expenseCount:  expenses.length,
         categoryBreakdown,
         dailyBreakdown,
+        costTypeBreakdown,
         highestExpense: stripUserId(highestExpense),
         currency:      trip.currency || 'USD',
       },
